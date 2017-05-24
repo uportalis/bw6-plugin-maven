@@ -64,12 +64,25 @@ public class BWModulesParser {
 			projects = session.getProjects();
 		}
 
-		for(MavenProject project : projects) {
+		// Look for a Maven module that belong to this Maven project.
+ 		for(MavenProject project : projects) {
+			System.out.println("Trying to match BW module " + module + " with Maven project " + project.getId());
 			if(project.getArtifactId().equals(module)) {
+				System.out.println("Matched BW module " + module + " with Maven project " + project.getId());
 				Artifact artifact = project.getArtifact();
 				return artifact;
 			}
 		}
+ 		 
+		// Look for a Maven module that is a dependency of this Maven project.
+		for (Artifact artifact : project.getDependencyArtifacts()) {
+			System.out.println("Trying to match BW module " + module + " with Maven project " + artifact.getId());
+			if (artifact.getArtifactId().equals(module)) {
+				System.out.println("Matched BW module " + module + " with Maven project " + artifact.getId());
+				return artifact;
+			}
+		}
+		
 		return null;
 	}
 

@@ -41,7 +41,6 @@ import com.tibco.bw.maven.plugin.build.BuildProperties;
 import com.tibco.bw.maven.plugin.build.BuildPropertiesParser;
 import com.tibco.bw.maven.plugin.osgi.helpers.ManifestParser;
 import com.tibco.bw.maven.plugin.osgi.helpers.ManifestWriter;
-import com.tibco.bw.maven.plugin.osgi.helpers.VersionParser;
 import com.tibco.bw.maven.plugin.utils.Constants;
 
 @Mojo(name = "bwmodule", defaultPhase = LifecyclePhase.PACKAGE)
@@ -92,7 +91,6 @@ public class BWModulePackageMojo extends AbstractMojo {
 
             getLog().info("Updated the Manifest version ");
             File manifestFile = ManifestWriter.updateManifest(project, manifest);
-            updateManifestVersion();
 
             getLog().info("Removing the externals entries if any. ");
             removeExternals();
@@ -270,13 +268,6 @@ public class BWModulePackageMojo extends AbstractMojo {
         }
         fileSet.setExcludes(allExcludes.toArray(new String[allExcludes.size()]));
         return fileSet;
-    }
-
-    private void updateManifestVersion() {
-    	String version = manifest.getMainAttributes().getValue(Constants.BUNDLE_VERSION);
-    	String qualifierVersion = VersionParser.getcalculatedOSGiVersion(version);
-    	getLog().info("The OSGi verion is " + qualifierVersion + " for Maven version of " + version);
-    	manifest.getMainAttributes().putValue(Constants.BUNDLE_VERSION, qualifierVersion);
     }
 
     private void removeExternals() {

@@ -93,7 +93,6 @@ public class BWEARPackagerMojo extends AbstractMojo {
             manifest = ManifestParser.parseManifest(projectBasedir);
             File manifestFile = ManifestWriter.updateManifest(project, manifest);
             getLog().info("Updated the Manifest version ");
-            updateManifestVersion();
     	    getLog().info("Adding Modules to the EAR file");
     		addModules();
     		getLog().info("Adding EAR Information to the EAR File");
@@ -116,7 +115,6 @@ public class BWEARPackagerMojo extends AbstractMojo {
 		File metainfFolder = getApplicationMetaInf();
 
 		//Add the files from the META-INF to the EAR File.
-		File manifestFile = ManifestWriter.updateManifest(project, manifest);
 		File appManifest = addFiletoEAR(metainfFolder);
 
 		File earFile = getArchiveFileName();
@@ -392,14 +390,5 @@ public class BWEARPackagerMojo extends AbstractMojo {
 			file.delete();
 		}
 		getLog().debug("cleaned up the temporary files.");
-    }
-    /**
-     *  Updated the Application manifest just like the module one
-     */
-    private void updateManifestVersion() {
-    	String version = manifest.getMainAttributes().getValue(Constants.BUNDLE_VERSION);
-    	String qualifierVersion = VersionParser.getcalculatedOSGiVersion(version);
-    	getLog().info("The OSGi verion is " + qualifierVersion + " for Maven version of " + version);
-    	manifest.getMainAttributes().putValue(Constants.BUNDLE_VERSION, qualifierVersion);
     }
 }
