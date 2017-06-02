@@ -1,6 +1,9 @@
 ﻿Copyright (c) 2015, TIBCO Software Inc.
 All rights reserved.
 
+Copyright (c) 2017, SkySoft-ATM (http://www.skysoft-atm.com)
+All rights reserved.
+
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions are 
 met:
