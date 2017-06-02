@@ -159,9 +159,10 @@ public class BWModulePackageMojo extends AbstractMojo {
 
         if (resolutionResult != null) {
         	for(Dependency dependency : resolutionResult.getDependencies()) {
-                getLog().debug("Adding artifact for dependency => " + dependency + ". The file for Dependency is => "  + dependency.getArtifact().getFile());
-    			if(!dependency.getArtifact().getVersion().equals("0.0.0")) {
-            		artifactFiles.add(dependency.getArtifact().getFile());
+				if (!Constants.MAVEN_SCOPE_PROVIDED.equals(dependency.getScope())
+						&& !dependency.getArtifact().getVersion().equals("0.0.0")) {
+                	getLog().debug("Adding artifact for dependency => " + dependency + ". The file for Dependency is => "  + dependency.getArtifact().getFile());
+        			artifactFiles.add(dependency.getArtifact().getFile());
     			}
         	}
         }
