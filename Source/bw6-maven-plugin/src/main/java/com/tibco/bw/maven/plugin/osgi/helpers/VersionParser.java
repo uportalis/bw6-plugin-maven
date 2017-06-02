@@ -3,6 +3,8 @@ package com.tibco.bw.maven.plugin.osgi.helpers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.maven.shared.utils.StringUtils;
+
 public class VersionParser {
     protected static SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
     public static final String QUALIFIER = "qualifier";
@@ -14,18 +16,14 @@ public class VersionParser {
 		return new Version(version);
 	}
 
-	public static String getcalculatedOSGiVersion(String versionStr) {
-		Version version = parseVersion(versionStr);
+	public static String getcalculatedOSGiVersion(String mavenProjectVersion) {
+		Version version = parseVersion(mavenProjectVersion.replace("-SNAPSHOT", ""));
 		String calcQualifier = calculateQualifier(version.getQualifier());
-		String fullVersion = version.getMajor() + "." + version.getMinor() + "." + version.getMicro();
-		if(!calcQualifier.isEmpty()) {
-			fullVersion += "." + calcQualifier;
-		}
-		return fullVersion;
+		return version.getMajor() + "." + version.getMinor() + "." + version.getMicro() + "." + calcQualifier;
 	}
 
     private static String calculateQualifier(String qualifier) {
-    	if( QUALIFIER.equals(qualifier)) {
+    	if (qualifier.isEmpty() || QUALIFIER.equals(qualifier)) {
             Date timestamp = new Date();
             return format.format(timestamp);
     	}
