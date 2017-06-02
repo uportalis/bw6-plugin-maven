@@ -20,7 +20,6 @@ public class ManifestWriter {
         System.out.println("Update Attribute");
         
         String version = project.getVersion();
-    	attributes.put(Name.MANIFEST_VERSION, version);
     	
     	String qualifiedVersion = VersionParser.getcalculatedOSGiVersion(version.replace("-SNAPSHOT", "") + ".qualifier");
     	System.out.println("The OSGi version is " + qualifiedVersion + " for Maven version of " + version);
