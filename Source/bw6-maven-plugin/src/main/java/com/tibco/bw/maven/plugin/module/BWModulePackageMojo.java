@@ -144,14 +144,7 @@ public class BWModulePackageMojo extends AbstractMojo {
 
 	private void addDependencies() {
 		getLog().debug("Adding Maven dependencies to the JAR file");
-		Set<Artifact> artifacts = project.getDependencyArtifacts();
 		Set<File> artifactFiles = new HashSet<File>(); 
-
-		for(Artifact artifact : artifacts) {
-			if(!artifact.getVersion().equals("0.0.0")) {
-				artifactFiles.add(artifact.getFile());
-			}
-		}
 
         DependencyResolutionResult resolutionResult = getDependencies();
         getLog().debug(resolutionResult.toString());
